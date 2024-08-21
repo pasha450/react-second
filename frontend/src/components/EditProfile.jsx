@@ -159,7 +159,7 @@ const handleSubmit =  async(e) => {
                                 <input
                                  className="form-check-input"
                                   type="radio" 
-                                  name="inlineRadioOptions" 
+                                  name="gender" 
                                   id="inlineRadio2"
                                   value="2"
                                   checked={userData.gender =="2" ? true : false}
@@ -175,7 +175,7 @@ const handleSubmit =  async(e) => {
                                     className="form-control"
                                      type="file" 
                                      id="formFile"
-                                      name="profile_image"
+                                     name="profile_image"
                                      onChange={handleImageChange}
                                      />
                                 </div>

@@ -6,7 +6,7 @@ function Profile(){
         <header className="header">
     		<div className="container">
                 <nav className="navbar navbar-expand-md navbar-light p-0">
-                    <Link className="navbar-brand mr-0 p-0" href="index.html">AP88</Link>
+                    <Link className="navbar-brand mr-0 p-0" to="index.html">AP88</Link>
                     <button className="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                         <span className="navbar-toggler-icon"></span>
@@ -14,8 +14,8 @@ function Profile(){
                     </button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav ml-auto text-uppercase">
-                            <li className="nav-item active"><a href="#" className="nav-link">Form Submission</a></li>
-                            <li className="nav-item"><Link to="/" className="nav-link">Activity</Link></li>
+                            <li className="nav-item active"><Link to="/ViewSubmission" className="nav-link">Form Submission</Link></li>
+                            <li className="nav-item"><Link to="/Activity" className="nav-link">Activity</Link></li>
                             <li className="nav-item"><Link to="/" className="nav-link">Logout</Link></li>
                         </ul>
                     </div>

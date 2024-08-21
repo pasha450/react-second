@@ -44,7 +44,7 @@ function Header() {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ml-auto text-uppercase">
-                        <li className="nav-item active"><Link to="/Form Submission" className="nav-link">Form Submission</Link></li>
+                        <li className="nav-item active"><Link to="/ViewSubmission" className="nav-link">Form Submission</Link></li>
                         <li className="nav-item"><Link to="/Activity" className="nav-link">Activity</Link></li>
                         <li className="nav-item"><Link to="#" onClick={handleLogout} className="nav-link">Logout</Link></li>
                     </ul>

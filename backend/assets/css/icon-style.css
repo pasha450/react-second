@@ -1,0 +1,138 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('../fonts/icomoon.eot?40924t');
+  src:  url('../fonts/icomoon.eot?40924t#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?40924t') format('truetype'),
+    url('../fonts/icomoon.woff?40924t') format('woff'),
+    url('../fonts/icomoon.svg?40924t#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-setting:before {
+  content: "\e900";
+}
+.icon-sign-out:before {
+  content: "\e901";
+}
+.icon-star:before {
+  content: "\e902";
+}
+.icon-star-blank:before {
+  content: "\e903";
+}
+.icon-star-half:before {
+  content: "\e904";
+}
+.icon-submit:before {
+  content: "\e905";
+}
+.icon-trash:before {
+  content: "\e906";
+}
+.icon-twitter-circle:before {
+  content: "\e907";
+}
+.icon-user:before {
+  content: "\e908";
+}
+.icon-add-user:before {
+  content: "\e909";
+}
+.icon-angle-left:before {
+  content: "\e90a";
+}
+.icon-angle-right:before {
+  content: "\e90b";
+}
+.icon-arrow-right:before {
+  content: "\e90c";
+}
+.icon-bell:before {
+  content: "\e90d";
+}
+.icon-bell-fill:before {
+  content: "\e90e";
+}
+.icon-calendar:before {
+  content: "\e90f";
+}
+.icon-card:before {
+  content: "\e910";
+}
+.icon-check:before {
+  content: "\e911";
+}
+.icon-check-light:before {
+  content: "\e912";
+}
+.icon-clock:before {
+  content: "\e913";
+}
+.icon-edit:before {
+  content: "\e914";
+}
+.icon-facebook-circle:before {
+  content: "\e915";
+}
+.icon-filter:before {
+  content: "\e916";
+}
+.icon-grid:before {
+  content: "\e917";
+}
+.icon-hand-star:before {
+  content: "\e918";
+}
+.icon-instagram-circle:before {
+  content: "\e919";
+}
+.icon-linkedin-circle:before {
+  content: "\e91a";
+}
+.icon-map-pin:before {
+  content: "\e91b";
+}
+.icon-medal:before {
+  content: "\e91c";
+}
+.icon-membership:before {
+  content: "\e91d";
+}
+.icon-message:before {
+  content: "\e91e";
+}
+.icon-minus:before {
+  content: "\e91f";
+}
+.icon-paypal:before {
+  content: "\e920";
+}
+.icon-pc-dollar:before {
+  content: "\e921";
+}
+.icon-phone:before {
+  content: "\e922";
+}
+.icon-plus:before {
+  content: "\e923";
+}
+.icon-search:before {
+  content: "\e924";
+}

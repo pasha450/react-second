@@ -7,11 +7,13 @@ import Cookies from 'js-cookie';
 
 import axios from "axios";
 function Signup(){
+    const[error ,setError]=useState()
+	const [isChecked, setIsChecked] = useState(false); 
 	const[userData , setUserData] = useState({gender:' '});
 	const navigate = useNavigate();
 	const [isPaswordVisiable , setIsPasswordVisiable] = useState(false);
     const [ConfirmPaswordVisiable , setConfirmPasswordVisiable] = useState(false);
-	const { register ,setValue,setError,handleSubmit, formState: { errors } } = useForm();
+	const { register ,setValue,handleSubmit, formState: { errors } } = useForm();
 	const [formValues, setFormValues] = useState({
 		username: '',
         email: '',
@@ -26,6 +28,7 @@ function Signup(){
 		if (token) {
 		  navigate('/'); 
 		}   
+		 
 		  const savedEmail =localStorage.getItem('savedEmail')
 		  const savedPassword = localStorage.getItem('savedPassword')
 		  const savedName =localStorage.getItem('savedName')
@@ -39,6 +42,15 @@ function Signup(){
 			} 
 			  },   [navigate,setValue]);
   
+			  const handleCheckboxChange = (event) => {
+				setIsChecked(event.target.checked); 
+				if (!isChecked) {
+					setError('You must accept the terms of use and Privacy Policy');
+				} else {
+					setError('');
+				} 
+			};
+	
 			  const handleChange = (e) => {
 			  setFormValues({ ...formValues, gender: e.target.value });
 			}
@@ -92,7 +104,7 @@ function Signup(){
 											type="text" 
 											className="form-control border-top-0 border-right-0 border-left-0 rounded-0 shadow-none" 
 											id="username"
-		                                    placeholder="Username"
+		                                    placeholder="Name"
 											value={formValues.name}
 											{...register("name", {
 											  required: 'Name is required',
@@ -184,6 +196,7 @@ function Signup(){
 											onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
 											/>
                                             <img src={ConfirmPaswordVisiable ? "/assets/images/eye.svg" : "/assets/images/eye-off.svg"} alt="Signup" className="img-fluid" onClick={()=>setConfirmPasswordVisiable(!ConfirmPaswordVisiable)}/>
+										    {errors.confirmPassword && <p className="text-danger">{errors.confirmPassword.message}</p>}
 										</div>
 										
 		                                <div className="row  mt-4 mb-4">
@@ -192,12 +205,16 @@ function Signup(){
 		                                            <input 
 													className="form-check-input" 
 													type="checkbox" value=""
-													 id="defaultCheck1"/>
-		                                            <label className="form-check-label" for="defaultCheck1">I accept
+													 id="defaultCheck1"
+													 checked={isChecked}
+													 onChange={handleCheckboxChange}
+													 />
+		                                            <label className="form-check-label" htmlFor="defaultCheck1">I accept
                                                         <Link to ="/">the terms of use </Link> & <Link to="/">Privacy Policy</Link></label>
 		                                        </div>
 		                                    </div>
 		                                </div>
+									
 		                                <button 
 										type="submit"
 										className="btn btn-success btn-block shadow border-0 py-2 text-uppercase "> Register

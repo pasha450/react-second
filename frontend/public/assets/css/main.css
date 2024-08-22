@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap');
 *{
-    padding: 0;
+    padding: 3px;
     margin: 0;
     outline: none;
 }
@@ -16,9 +16,11 @@ body{
     font-size: 30px;
     margin-bottom: 20px;
     color: #000;
+
 }
 .AppForm .AppFormLeft input:focus{
     border-color: #ced4da;
+
 }
 .AppForm .AppFormLeft input::placeholder{
    font-size: 15px;

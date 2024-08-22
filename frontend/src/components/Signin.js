@@ -151,7 +151,7 @@ function Signin(){
 		                                </button>
 
 		                                <p className="text-center mt-4 mb-0">
-		                                    Don't have an account? <Link to="/">Create your account</Link> </p>
+		                                    Don't have an account? <Link to="/register">Create your account</Link> </p>
 
 		                            </div>
 

@@ -7,14 +7,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import Cookies from 'js-cookie'; 
 function Signin(){
     const apiUrl = process.env.REACT_APP_API_URL;
-
+  
 	const navigate = useNavigate();
 	const [isPaswordVisiable , setIsPasswordVisiable] = useState(false);
     const [user,setUser]=useState(null);
     const [rememberMe, setRememberMe] = useState({ username: '', password: '' });
     const [isCheckedrememberMe, setIsCheckedrememberMe] = useState(false);
 
-	const { register,handleSubmit,setError,formState: { errors } } = useForm();
+	const { register,setError,handleSubmit,formState: { errors } } = useForm();
       useEffect(()=>{
     
         const token = Cookies.get('authToken');
@@ -23,15 +23,17 @@ function Signin(){
         }   
 		const rememberMeData = localStorage.getItem('rememberMe');
         setRememberMe(JSON.parse(rememberMeData))
-        console.log(rememberMeData,"rememberMe2");
+        // console.log(rememberMeData,"rememberMe2");
         if(rememberMeData !==''){
             setIsCheckedrememberMe(false);
 		}
 	    },[navigate]);
 
 		const onSubmit = async (data) => {
-			const dataa = { useremail: 'testuser', password: 'testpass' };
+			// const dataa = {email:'email',password:'password'};
+            
 				try {
+
 				  const response = await axios.post(`${apiUrl}/login`, data);
 				  console.log('Login successful:', response);
 				  toast.success('Login successfully!');
@@ -46,11 +48,9 @@ function Signin(){
 				  localStorage.setItem('storeData', JSON.stringify(storeData));
                   console.log('setUser',storeData);
             
-				 if (token) { 
-
-					let rememberMe = {email:dataa.email,password:dataa.password};
+				 if (isCheckedrememberMe) { 
+					const rememberMe = {email:data.email,password:data.password};
 					localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
-				
 				}else {
 					localStorage.removeItem('rememberMe');
 				}
@@ -76,15 +76,15 @@ function Signin(){
 				  toast.error('Login failed!');
 				  localStorage.removeItem('storeData');
 				  
-				 }
-				
+				 }		 
 			};  
 			const handleRememberMeChange = (e) => {
 				const isChecked = e.target.checked;
 				setIsCheckedrememberMe(isChecked)
 			};
-			
-		console.log(rememberMe,'rememberMe',isCheckedrememberMe)
+			console.log(rememberMe,'rememberMe',isCheckedrememberMe)
+
+
     return(
           <section className="account__Sec h-100">
 		    <div className="container h-100 mar-top">
@@ -96,7 +96,8 @@ function Signin(){
 		                            <div className="AppFormLeft">
 		                                <h1>Login</h1>
 		                                <div className="form-group position-relative mb-4">
-		                                    <input type="text" 
+		                                    <input 
+											type="text" 
 											className="form-control border-top-0 border-right-0 border-left-0 rounded-0 shadow-none" id="email"
 		                                    placeholder="Email"
 											{...register("email", {
@@ -111,11 +112,13 @@ function Signin(){
 		                                <div className="form-group position-relative mb-4">
 		                                    <input
 											type= {isPaswordVisiable ? "text " :"password" }
-											 className="form-control border-top-0 border-right-0 border-left-0 rounded-0 shadow-none" id="password"
+											 className="form-control border-top-0 border-right-0 border-left-0 rounded-0 shadow-none"
+											 id="password"
 		                                     placeholder="Password"
 											 {...register('password', { 
 												required: 'Password is required',
 											  })}
+										
 											  defaultValue={rememberMe !== null ? rememberMe.password:''}
 												/>
 		                                       
@@ -129,12 +132,12 @@ function Signin(){
 		                                        <div className="form-check">
 		                                            <input 
 													className="form-check-input" 
-													type="checkbox" value="" 
-													id="defaultCheck1"
+													type="checkbox" 
+													  id="remember-me"
 													onChange={handleRememberMeChange}
 													checked={isCheckedrememberMe}
 													/> 
-		                                            <label className="form-check-label" htmlFor="defaultCheck1">
+		                                            <label className="form-check-label" htmlFor="remember-me">
 		                                                Remember me
 		                                            </label>
 		                                        </div>

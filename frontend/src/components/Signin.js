@@ -16,23 +16,27 @@ function Signin(){
 
 	const { register,setError,handleSubmit,formState: { errors } } = useForm();
       useEffect(()=>{
-    
+      
         const token = Cookies.get('authToken');
        if (token) {
          navigate('/'); 
         }   
+		// ******reterieve data from localStorage******
 		const rememberMeData = localStorage.getItem('rememberMe');
-        setRememberMe(JSON.parse(rememberMeData))
-        // console.log(rememberMeData,"rememberMe2");
+        
         if(rememberMeData !==''){
-            setIsCheckedrememberMe(false);
+			const parsedData = JSON.parse(rememberMeData);
+			setRememberMe(parsedData);
+            setIsCheckedrememberMe(true);
+		}
+		else{
+			setIsCheckedrememberMe(false);
 		}
 	    },[navigate]);
 
 		const onSubmit = async (data) => {
-			// const dataa = {email:'email',password:'password'};
-            
-				try {
+			console.log("form submitted with data:",data)
+			try {
 
 				  const response = await axios.post(`${apiUrl}/login`, data);
 				  console.log('Login successful:', response);
@@ -47,7 +51,8 @@ function Signin(){
 				  
 				  localStorage.setItem('storeData', JSON.stringify(storeData));
                   console.log('setUser',storeData);
-            
+
+            // ****set data in localStorage****
 				 if (isCheckedrememberMe) { 
 					const rememberMe = {email:data.email,password:data.password};
 					localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
@@ -57,10 +62,9 @@ function Signin(){
 				  setTimeout(() => {
 					  navigate('/profile')
 				   }, 800);
+		
 
-			        //   ----------set value in localStorage-----
-
-				} catch (error) {
+			}catch (error) {
 					console.log(error,'typeee')
 				if (error.response && error.response.data.errors) {
 					error.response.data.errors.forEach(err => {
@@ -80,11 +84,10 @@ function Signin(){
 			};  
 			const handleRememberMeChange = (e) => {
 				const isChecked = e.target.checked;
-				setIsCheckedrememberMe(isChecked)
+				setIsCheckedrememberMe(isChecked) 
 			};
 			console.log(rememberMe,'rememberMe',isCheckedrememberMe)
-
-
+            
     return(
           <section className="account__Sec h-100">
 		    <div className="container h-100 mar-top">
@@ -102,7 +105,6 @@ function Signin(){
 		                                    placeholder="Email"
 											{...register("email", {
 											  required: 'email is required',
-											  
 											})}
 											defaultValue={rememberMe !== null ? rememberMe.email:''}
 											/>
@@ -116,9 +118,8 @@ function Signin(){
 											 id="password"
 		                                     placeholder="Password"
 											 {...register('password', { 
-												required: 'Password is required',
+												// required: 'Password is required',
 											  })}
-										
 											  defaultValue={rememberMe !== null ? rememberMe.password:''}
 												/>
 		                                       
@@ -140,7 +141,7 @@ function Signin(){
 		                                            <label className="form-check-label" htmlFor="remember-me">
 		                                                Remember me
 		                                            </label>
-		                                        </div>
+		                                        </div>	
 		                                    </div>
 		                                     <div className="col-md-6 text-right">
 		                                        <Link to="/reset">Forgot Password?</Link>

@@ -15,7 +15,7 @@ function Signup(){
     const [ConfirmPaswordVisiable , setConfirmPasswordVisiable] = useState(false);
 	const { register ,setValue,handleSubmit, formState: { errors } } = useForm();
 	const [formValues, setFormValues] = useState({
-		username: '',
+		// username: '',
         email: '',
         gender: '',
         password: '',
@@ -55,10 +55,11 @@ function Signup(){
 			  setFormValues({ ...formValues, gender: e.target.value });
 			}
 			console.log(formValues,'formValues');
-
+            
 
 
 	const handleInputChange = (field, value) => {
+
 		setFormValues({ ...formValues, [field]: value });
 		setValue(field, value, { shouldValidate: true });
 	  };
@@ -91,7 +92,7 @@ function Signup(){
 
     return(
         <section className="account__Sec h-100">
-		    <div className="container h-100 mar-top">
+		    <div className="container h-100 ">
 		        <div className="row justify-content-center align-items-center h-100">
 		            <form className="col-md-9"onSubmit={handleSubmit(onSubmit)}>
 		                <div className="AppForm shadow-lg">
@@ -174,7 +175,7 @@ function Signup(){
 												value={formValues.password}
 												{...register('password', {
 													required: 'Password must be required',
-												
+													// minLength: { value: 8, message: 'Password must be at least 8 characters long' },
 												})}
 												onChange={(e) => handleInputChange('password', e.target.value)}
 												/>
@@ -191,9 +192,10 @@ function Signup(){
 											value={formValues.confirmPassword}
 											{...register('confirmPassword', {
 											  required: 'ConfirmPassword is required',
-											 
-											})}
+											  validate: value => value === formValues.password || 'Password do not match'
+											  })}
 											onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+			
 											/>
                                             <img src={ConfirmPaswordVisiable ? "/assets/images/eye.svg" : "/assets/images/eye-off.svg"} alt="Signup" className="img-fluid" onClick={()=>setConfirmPasswordVisiable(!ConfirmPaswordVisiable)}/>
 										    {errors.confirmPassword && <p className="text-danger">{errors.confirmPassword.message}</p>}
@@ -206,12 +208,18 @@ function Signup(){
 													className="form-check-input" 
 													type="checkbox" value=""
 													 id="defaultCheck1"
+													 name="checkbox"
+													 {...register('checkbox', {
+														required: "Checkbox is required",
+													 })}
 													 checked={isChecked}
 													 onChange={handleCheckboxChange}
 													 />
-		                                            <label className="form-check-label" htmlFor="defaultCheck1">I accept
-                                                        <Link to ="/">the terms of use </Link> & <Link to="/">Privacy Policy</Link></label>
-		                                        </div>
+		                                            <label className="form-check-label" htmlFor="defaultCheck1">I accept 
+													<Link to ="/">the terms of use </Link> & <Link to="/">Privacy Policy</Link>
+													</label>
+													{errors.checkbox && <p className="text-danger">{errors.checkbox.message}</p>}
+												</div>
 		                                    </div>
 		                                </div>
 									

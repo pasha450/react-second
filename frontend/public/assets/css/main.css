@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap');
 *{
-    padding: 3px;
+    padding: 0;
     margin: 0;
     outline: none;
 }
@@ -42,6 +42,9 @@ body{
 .AppForm .AppFormLeft p a{
     color: #c56160;
     text-decoration: underline;
+}
+.mar-top{
+    margin-top: 5%;
 }
 .AppForm .AppFormRight{
     background-image: url('../images/bg.jpg');

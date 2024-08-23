@@ -1,19 +1,45 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function Forget (){
+  const apiUrl = process.env.REACT_APP_API_URL;
    const[email,setEmail]=useState('');
    const[error,setError]=useState('');
    const[message,setMessage]=useState('');
+   const[loading,setloading]=useState('');
 
-   const handleSubmit = async (event) => {
+   const validateEmail = (email) =>{
+   const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+	return re.test(String(email).toLowerCase());
+   }
+
+    const handleSubmit = async (event) => {
     event.preventDefault();
+	setError('');
+	setMessage('');
+
+	if(!validateEmail(email))
+	{   
+		setError('Please Enter a valid email address');
+		return;
+	}
+	setloading(true);
         try {
-			const response = await axios.post('/api/forgot-password', { email });
+			const response = await axios.post(`${apiUrl}/forget-password`, { email });
 			setMessage(response.data.message);
 			console.log(setMessage);
+			toast.success('Reset email sent successfully');
+
+			setTimeout(() => {
+            }, 800);
 		} catch (err) {
-			setError('Error sending reset email');
+			// setError('Error sending reset email');
+			toast.error('error sending reset email');
+		  }finally{
+			setloading(false);
 		  }
 		};  
     return(
@@ -35,13 +61,20 @@ function Forget (){
 		                                     placeholder="Email"
 											 value={email}
                                             onChange={(e) => setEmail(e.target.value)}
+											disabled={loading}
                                             />
 		                                    <i className="fa fa-envelope-o"></i>
-											{error.email && <div className="text-danger">{error.email.message}</div>}
+											{error && <div className="text-danger">{error}</div>}
 		                                </div>
-		                                <button className="btn btn-success btn-block shadow border-0 py-2 text-uppercase ">
+		                                <button 
+										className="btn btn-success btn-block shadow border-0 py-2 text-uppercase "
+										type="submit"
+										disabled={loading}
+										>
+										{/* {loading ?'sending...': 'Forget Password'} */}
 		                                    Forget Password
 		                                </button>
+										{message && <div className="text-success mt-3">{message}</div>}
 		                            </div>
 
 		                        </div>
@@ -57,6 +90,7 @@ function Forget (){
 		            </form>
 		        </div>
 		    </div>
+			<ToastContainer/>
     	</section>
         </>
     )

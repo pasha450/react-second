@@ -12,7 +12,7 @@ function Signin() {
     const [isPaswordVisiable, setIsPasswordVisiable] = useState(false);
     const [isCheckedrememberMe, setIsCheckedrememberMe] = useState(false);
 
-    const { register, setError, handleSubmit, setValue, formState: { errors } } = useForm();
+    const { register, setError, handleSubmit, setValue,watch, formState: { errors }, clearErrors} = useForm();
 
     useEffect(() => {
         const token = Cookies.get('authToken');
@@ -24,40 +24,59 @@ function Signin() {
         if (rememberMeData) {
             const parsedData = JSON.parse(rememberMeData);
             setIsCheckedrememberMe(true);
-            // Set values using setValue
             setValue('email', parsedData.email);
             setValue('password', parsedData.password);
         }
     }, [navigate, setValue]);
 
+    const email = watch("email");
+    const password = watch("password");
+
+    useEffect(() => {
+        if (email) clearErrors('email');
+        if (password) clearErrors('password');
+        clearErrors('invalidCredential');
+    }, [email, password, clearErrors]);
+
+
     const onSubmit = async (data) => {
-        console.log("form submitted with data:", data);
+        console.log("Form submitted with data:", data);
+        clearErrors();
+    
         try {
             const response = await axios.post(`${apiUrl}/login`, data);
-            console.log('Login successful:', response);
+            console.log('Login successful:', response.data);
             toast.success('Login successfully!');
-            const { token } = response.data;
-            const loggedUserData = response.data.user;
+            
+            const { token, user } = response.data;
+            if (!token || !user) {
+                throw new Error('Invalid response from server');
+            }
     
+            // Store the token and user information
             Cookies.set('authToken', token, { expires: 1 });
-    
-            const { _id, name, profile_image } = loggedUserData;
+            const { _id, name, profile_image } = user;
             const storeData = { userId: _id, name: name, profile_image: profile_image };
             localStorage.setItem('storeData', JSON.stringify(storeData));
     
+            
             if (isCheckedrememberMe) {
                 const rememberMe = { email: data.email, password: data.password };
                 localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
             } else {
                 localStorage.removeItem('rememberMe');
             }
-    
             setTimeout(() => {
                 navigate('/profile');
             }, 800);
     
         } catch (error) {
             console.error('Login failed:', error);
+    
+            // Clear authToken and storeData if login fails
+            Cookies.remove('authToken');
+            localStorage.removeItem('storeData');
+    
             if (error.response && error.response.data.errors) {
                 error.response.data.errors.forEach(err => {
                     setError(err.field, { type: 'server', message: err.message });
@@ -67,8 +86,6 @@ function Signin() {
             } else {
                 toast.error('Login failed. Please try again.');
             }
-            toast.error('Login failed!');
-            localStorage.removeItem('storeData');
         }
     };
     
@@ -76,7 +93,7 @@ function Signin() {
     const handleRememberMeChange = (e) => {
         setIsCheckedrememberMe(e.target.checked);
     };
-
+     
     return (
         <section className="account__Sec h-100">
             <div className="container h-100 mar-top">

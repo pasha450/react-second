@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import ViewSubmission from './pages/ViewSubmission';
 import Reset from './pages/Reset';
 import Activity from './components/Activity';
+import PasswordSet from './pages/PasswordSet';
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
        <Route path ='/viewSubmission' element ={<ViewSubmission/>}></Route>
        <Route path ='/reset' element ={<Reset/>}></Route>
        <Route path ='/activity' element ={<Activity/>}></Route>
+       <Route path ='/reset-password/:token' element={<PasswordSet/>}></Route>
      </Routes>
    </BrowserRouter>
   );

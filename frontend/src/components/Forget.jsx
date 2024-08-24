@@ -20,7 +20,7 @@ function Forget (){
     event.preventDefault();
 	setError('');
 	setMessage('');
-
+    
 	if(!validateEmail(email))
 	{   
 		setError('Please Enter a valid email address');
@@ -45,6 +45,7 @@ function Forget (){
     return(
         <>
         <section className="account__Sec h-100">
+		<div className="mar-top">
 		    <div className="container h-100">
 		        <div className="row justify-content-center align-items-center h-100">
 		            <form className="col-md-9" onSubmit={handleSubmit}>
@@ -90,6 +91,7 @@ function Forget (){
 		            </form>
 		        </div>
 		    </div>
+			</div>
 			<ToastContainer/>
     	</section>
         </>

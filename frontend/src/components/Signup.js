@@ -81,7 +81,7 @@ function Signup(){
 		  } 
 		   else if (error.response && error.response.data.error) {
 			toast.error(error.response.data.error);
-	
+	        
 		  }
 		   else {
 			toast.error('An unexpected error occurred. Please try again.');
@@ -179,7 +179,7 @@ function Signup(){
 												})}
 												onChange={(e) => handleInputChange('password', e.target.value)}
 												/>
-												<img src={isPaswordVisiable ? "/assets/images/eye.svg" : "/assets/images/eye-off.svg"} alt="AP88 SignIn" className="img-fluid" onClick={()=>setIsPasswordVisiable(!isPaswordVisiable)}/>
+												<img src={isPaswordVisiable ? "/assets/images/eye.svg" : "/assets/images/eye-off.svg"} alt="AP88 SignIn" className="img-fluid eye-icon" onClick={()=>setIsPasswordVisiable(!isPaswordVisiable)}/>
 
                                                {errors.password && <p className="text-danger">{errors.password.message}</p>}
 		                                </div>
@@ -197,7 +197,7 @@ function Signup(){
 											onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
 			
 											/>
-                                            <img src={ConfirmPaswordVisiable ? "/assets/images/eye.svg" : "/assets/images/eye-off.svg"} alt="Signup" className="img-fluid" onClick={()=>setConfirmPasswordVisiable(!ConfirmPaswordVisiable)}/>
+                                            <img src={ConfirmPaswordVisiable ? "/assets/images/eye.svg" : "/assets/images/eye-off.svg"} alt="Signup" className="eye-icon img-fluid" onClick={()=>setConfirmPasswordVisiable(!ConfirmPaswordVisiable)}/>
 										    {errors.confirmPassword && <p className="text-danger">{errors.confirmPassword.message}</p>}
 										</div>
 										

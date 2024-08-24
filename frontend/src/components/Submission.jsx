@@ -1,5 +1,4 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 function Submission(){
     return(
         <>
@@ -15,12 +14,14 @@ function Submission(){
                         <span>1</span>
                     </li> 
                     <li>
-                        <span>Port</span>
-                        <span>123</span>
+                        <span>Name</span>
+                        <span>harry</span>
+                    
                     </li> 
                     <li>
-                        <span>USSD</span>
-                        <span>123*#</span>
+                        <span>Email</span>
+                        <span>harry@gmail.com</span>
+                     
                     </li> 
                     <li>
                         <span>Status</span>

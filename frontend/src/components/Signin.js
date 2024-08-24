@@ -38,26 +38,26 @@ function Signin() {
             toast.success('Login successfully!');
             const { token } = response.data;
             const loggedUserData = response.data.user;
-
+    
             Cookies.set('authToken', token, { expires: 1 });
-
+    
             const { _id, name, profile_image } = loggedUserData;
             const storeData = { userId: _id, name: name, profile_image: profile_image };
             localStorage.setItem('storeData', JSON.stringify(storeData));
-
+    
             if (isCheckedrememberMe) {
                 const rememberMe = { email: data.email, password: data.password };
                 localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
             } else {
                 localStorage.removeItem('rememberMe');
             }
-
+    
             setTimeout(() => {
                 navigate('/profile');
             }, 800);
-
+    
         } catch (error) {
-            console.log(error, 'typeee');
+            console.error('Login failed:', error);
             if (error.response && error.response.data.errors) {
                 error.response.data.errors.forEach(err => {
                     setError(err.field, { type: 'server', message: err.message });
@@ -67,11 +67,11 @@ function Signin() {
             } else {
                 toast.error('Login failed. Please try again.');
             }
-            console.log('Login failed:', error);
             toast.error('Login failed!');
             localStorage.removeItem('storeData');
         }
     };
+    
 
     const handleRememberMeChange = (e) => {
         setIsCheckedrememberMe(e.target.checked);
@@ -110,9 +110,11 @@ function Signin() {
                                                     required: 'Password is required',
                                                 })}
                                             />
-                                            <img src={isPaswordVisiable ? "/assets/images/eye.svg" : "/assets/images/eye-off.svg"} alt="Pailogs SignIn" className="img-fluid" onClick={() => setIsPasswordVisiable(!isPaswordVisiable)} />
+                                        
+                                            <img src={isPaswordVisiable ? "/assets/images/eye.svg" : "/assets/images/eye-off.svg"} alt="Pailogs SignIn" className="eye-icon img-fluid" onClick={() => setIsPasswordVisiable(!isPaswordVisiable)} />
                                             {errors.password && <p className="text-danger">{errors.password.message}</p>}
                                             {errors.invalidCredential && <p className="text-danger">{errors.invalidCredential.message}</p>}
+                                        
                                         </div>
                                         <div className="row mt-4 mb-4">
                                             <div className="col-md-6">
@@ -131,7 +133,7 @@ function Signin() {
                                             </div>
                                             <div className="col-md-6 text-right">
                                                 <Link to="/reset">Forgot Password?</Link>
-                                            </div>
+                                            </div>    
                                         </div>
 
                                         <button

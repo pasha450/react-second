@@ -273,4 +273,14 @@ form.formarea select.form-control {
 }
 table.dataTable {
     width: 100% !important;
-}
+} 
+.eye-icon {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer; 
+    width: 20px; 
+    height: auto; 
+    padding-right: 1px;
+  }

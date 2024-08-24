@@ -5,6 +5,7 @@ import { ToastContainer,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
 const apiUrl = process.env.REACT_APP_API_URL;
 
+
 function EditProfile(){
     const[Message,setMessage] = useState('');
     const[userId, setUserId] = useState('');
@@ -64,18 +65,10 @@ function EditProfile(){
         ...prevState,
          [name]: value,
         }));
-        //  console.log("value = " , e.target.value);    
-        // console.log("name = " , e.target.name);   
-        //  console.log("current name", userData.name)
 }
 const handleSubmit =  async(e) => {
     e.preventDefault();
-    
-    //  use for upload image file -----
-         // if(!selectedImage){
-        //     setMessage('select an image to upload');
-        //     return ;
-        //  } 
+
         const formData = new FormData()
         formData.append('name', userData.name);
         formData.append('userId', userId);
@@ -107,6 +100,7 @@ const handleSubmit =  async(e) => {
 
             // --save the user object to localStorage---
             localStorage.setItem('storeData',JSON.stringify(userObject));
+            
         }
         catch(error){
           console.log(error);

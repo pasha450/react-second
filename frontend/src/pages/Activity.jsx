@@ -1,10 +1,11 @@
 import React from 'react'
 import EditActivity from '../components/EditActivity'
+import Header from '../components/Header'
 
 const Activity = () => {
   return (
    <>
-    <Header/>
+      <Header/>
     <EditActivity/>
    </>
   )

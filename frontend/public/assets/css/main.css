@@ -266,6 +266,8 @@ form.formarea select.form-control {
     }
     .header .navbar-nav .nav-link {
         padding: 8px 0;
+      
+
     }
     .header .navbar-nav li:not(:first-child) .nav-link:after{
         width: 0px;

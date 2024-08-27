@@ -134,7 +134,7 @@ async function forgetPassword(req, res) {
         }
 
         const randomString = randomstring.generate();
-        const url = `${process.env.FRONTEND_URL}/reset-password/${randomString}`;
+        const url = `${process.env.FRONTEND_URL}/reset-password/randomString`;
         let updated = await User.findByIdAndUpdate(user.id, {
           token: randomString,
         });

@@ -17,7 +17,7 @@ function EditActivity() {
       const userId = loggedUserData.userId;
       const header = {
           'Authorization': token 
-      } 
+      }  
       setHeader(header);
       setUserId(userId);
       console.log(userId,"userId66")

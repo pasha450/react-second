@@ -1,18 +1,45 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import AddUserModal from "./AddUserModal";
+import Cookies from "js-cookie";
+import axios from "axios";
+const apiUrl = process.env.REACT_APP_API_URL;
 
 function EditActivity() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [users, setUsers] = useState([]);
-
+        const [users, setUsers] = useState([]);
+        const [isModalOpen, setIsModalOpen] = useState(false);
+        const[userId, setUserId] = useState('');
+        const[header, setHeader] = useState({});
+    useEffect(() => {
+      const token = Cookies.get('authToken');
+      let loggedUserData = localStorage.getItem("storeData");
+      loggedUserData = JSON.parse(loggedUserData)
+      const userId = loggedUserData.userId;
+      const header = {
+          'Authorization': token 
+      } 
+      setHeader(header);
+      setUserId(userId);
+      console.log(userId,"userId66")
+      const fetchUsers = async () => {
+        try {
+            const response = await axios.post(`${apiUrl}user`,{createdBy:userId}, { headers: header });
+            console.log(header,"header")
+            setUsers(response.data.userData);
+        }catch (error) {
+            console.error('Error fetching users:', error);
+        }
+      };
+      fetchUsers();
+    }, []);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   
+  // **** Adding new user ****
   const addUser = (newUser) => {
     setUsers([...users, newUser]);
-  };
-
+   }
+   console.log(users,'users')
   return (
     <>
       <section className="formArea__Sec pt-5 mt-5">
@@ -39,8 +66,7 @@ function EditActivity() {
                 </div>
                 <div className="custom__datatable">
                   <table
-                    id="myTable"
-                    className="display responsive table table-bordered dataTable table-striped"
+                    className="display responsive table table-bordered"
                   >
                     <thead>
                       <tr>
@@ -54,7 +80,7 @@ function EditActivity() {
                     <tbody>
                       {users.map((user, index) => ( 
                         <tr key={index}>
-                          <td>{user.username}</td>
+                          <td>{user.name}</td>
                           <td>{user.email}</td>
                           <td>{user.gender === "1" ? "Male" : "Female"}</td>
                           <td>success</td>

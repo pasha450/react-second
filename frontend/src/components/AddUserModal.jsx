@@ -10,9 +10,9 @@ function AddUserModal({isOpen,onClose , addUser}) {
   const[userId, setUserId] = useState('');
   const[header, setHeader] = useState({});
   const[formData , setFormData] =useState({
-     username:'',
+     name:'',
      email: '',
-     gender:'' ,
+     gender:'',
   });
 
   const handleChange = (e) =>{
@@ -34,32 +34,23 @@ function AddUserModal({isOpen,onClose , addUser}) {
       setUserId(userId);
       console.log(userId,"userId")
 
-      const fetchUserData = async() =>{
-        try {
-          const response = await axios.post(`${apiUrl}user`,{userId},{ headers: header});
-
-        } catch(error){
-           console.log('error during the submission:',error);
-         }
-        };
-        fetchUserData();
    },[])
-
-   const handleSubmit = async (e) => {
+  
+    const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(`${apiUrl}user/store`, formData, { headers: header });
-      addUser(formData);
-      // onClose();
-
-      setFormData({
-        username: '',
-        email: '',
-        gender: '',
-      });
-    } catch (error) {
+      try {
+          const response = await axios.post(`${apiUrl}user/store`, formData, { headers: header }); 
+          console.log('Request Headers:',header);
+          addUser(response.data);
+          onClose();
+          setFormData({
+          name: '',
+          email: '',
+          gender: '',
+        });
+    } catch (error) { 
       console.log('Error during submission:', error);
-    }
+      }
   };
   return ( 
     <div>
@@ -82,13 +73,13 @@ function AddUserModal({isOpen,onClose , addUser}) {
              
             <form class="formarea"onSubmit={handleSubmit}>
     							<div class="form-group mb-4">
-    								<label>Username</label>
+    								<label>Name</label>
     								<input 
                     type="text"
                     class="form-control" 
-                    name='username'
-                    placeholder="Username"
-                    value={formData.username}
+                    name='name'
+                    placeholder="Name"
+                    value={formData.name}
                     onChange={handleChange}
                     />
     							</div>

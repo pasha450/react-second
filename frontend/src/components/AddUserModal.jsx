@@ -1,12 +1,14 @@
 import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Form,Button} from 'react-bootstrap';
-import { useEffect, useState } from 'react';
+import { useEffect, useState} from 'react';
 import axios from "axios";
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 const apiUrl = process.env.REACT_APP_API_URL;
 
-function AddUserModal({isOpen,onClose , addUser}) {
+function AddUserModal({isOpen,onClose ,addUser, userToEdit, userData, setUserData}) {
+  // const navigate =useNavigate();
   const[userId, setUserId] = useState('');
   const[header, setHeader] = useState({});
   const[formData , setFormData] =useState({
@@ -14,42 +16,46 @@ function AddUserModal({isOpen,onClose , addUser}) {
      email: '',
      gender:'',
   });
-
+  
   const handleChange = (e) =>{
-    const {name ,value} =e.target;
-    setFormData({
-      ...formData,
+    const {name ,value} = e.target;
+    setUserData({
+      ...userData,
       [name]:value,
     })
-  }
+  }   
    useEffect(() =>{
       const token = Cookies.get('authToken');
       let loggedUserData = localStorage.getItem("storeData");
       loggedUserData = JSON.parse(loggedUserData)
-      const userId = loggedUserData.userId;
+      const userId = loggedUserData.userId; 
       const header = {
           'Authorization': token 
       } 
       setHeader(header);
       setUserId(userId);
-      console.log(userId,"userId")
-
    },[])
-  
+   
     const handleSubmit = async (e) => {
     e.preventDefault();
-      try {
-          const response = await axios.post(`${apiUrl}user/store`, formData, { headers: header }); 
-          console.log('Request Headers:',header);
+    try{
+       if (userToEdit) {
+          const response = await axios.post(`${apiUrl}user/update`, userData,{ headers: header });
           addUser(response.data);
+          // navigate('/activity');
+      }else {
+          const response = await axios.post(`${apiUrl}user/store`, formData, { headers: header }); 
+          addUser(response.data);
+        }
           onClose();
           setFormData({
           name: '',
           email: '',
           gender: '',
         });
-    } catch (error) { 
+    }catch (error) { 
       console.log('Error during submission:', error);
+      onClose(true);
       }
   };
   return ( 
@@ -66,61 +72,61 @@ function AddUserModal({isOpen,onClose , addUser}) {
         <Modal.Body>
           <div className="want-to-edit">
             <div className="popup-heading-block text-center">
-              <img src="/assets/images/red-flag-bg.svg" class="img-fluid w-25" alt=""/>
+              <img src="/assets/images/red-flag-bg.svg" className="img-fluid w-25" alt=""/>
               <h3>Flag Data</h3>
               <p>Please report the incorrect information</p>
             </div>
              
-            <form class="formarea"onSubmit={handleSubmit}>
-    							<div class="form-group mb-4">
+            <form className="formarea"onSubmit={handleSubmit}>
+    							<div className="form-group mb-4">
     								<label>Name</label>
     								<input 
                     type="text"
-                    class="form-control" 
+                    className="form-control" 
                     name='name'
                     placeholder="Name"
-                    value={formData.name}
+                    value={userData.name}
                     onChange={handleChange}
                     />
     							</div>
-								<div class="form-group mb-4">
+								<div className="form-group mb-4">
     								<label>Email</label>
     								<input 
                     type="email" 
-                    class="form-control" 
+                    className="form-control" 
                     name='email'
                     placeholder="Email"
-                    value={formData.email}
+                    value={userData.email}
                     onChange={handleChange}
                     />
     							</div>
-								<div class="form-group position-relative mb-4">
-									<label for="">Gender</label> <br/>
-									<div class="form-check form-check-inline">
-										<input class="form-check-input"
+								<div className="form-group position-relative mb-4">
+									<label htmlFor="">Gender</label> <br/>
+									<div className="form-check form-check-inline">
+										<input className="form-check-input"
                      type="radio" 
                      name="gender" 
                      id="inlineRadio1" 
                      value= "1"
-                     checked={formData.gender =="1" ? true : false}
+                     checked={userData.gender =="1" ? true : false}
                      onChange={handleChange}
                      />
-										<label class="form-check-label" for="inlineRadio1">Male</label>
+										<label className="form-check-label" htmlFor="inlineRadio1">Male</label>
 									</div>
-									<div class="form-check form-check-inline">
-									<input class="form-check-input" 
+									<div className="form-check form-check-inline">
+									<input className="form-check-input" 
                   type="radio" 
                   name="gender" 
                   id="inlineRadio2"
                   value="2"
-                  checked={formData.gender =="2" ? true : false}
+                  checked={userData.gender =="2" ? true : false}
                   onChange={handleChange}
                    />
-									<label class="form-check-label" for="inlineRadio2">Female</label>
+									<label className="form-check-label" htmlFor="inlineRadio2">Female</label>
 									</div>
 								</div>
-                <div class="form-group">
-    								<button type="submit" class="submitbtn text-uppercase">Submit</button>
+                <div className="form-group">
+    								<button type="submit" className="submitbtn text-uppercase">Submit</button>
     							</div>
                </form>
           </div>
